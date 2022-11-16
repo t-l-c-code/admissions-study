@@ -1,0 +1,57 @@
+import numpy as np
+import pandas as pd
+admissions = pd.read_csv('admission_data.csv')
+
+# Proportion of students that are female
+female = admissions['gender'].value_counts()['female']
+print(female)
+tot = admissions['gender'].shape[0]
+print(tot)
+print(female/tot)
+
+# Proportion of students that are male
+male = admissions['gender'].value_counts()['male']
+print(male)
+print(tot)
+print(male/tot)
+
+# Admission rate for females
+print(len(admissions.query('gender == "female" & admitted == True'))/female)
+
+# Admission rate for males
+print(len(admissions.query('gender == "male" & admitted == True'))/male)
+
+female_phys = len(admissions.query('gender=="female" & major=="Physics"'))
+print(female_phys/female)
+
+# What proportion of male students are majoring in physics?
+male_phys = len(admissions.query('gender=="male" & major=="Physics"'))
+print(male_phys/male)
+
+# Admission rate for female physics majors
+print(len(admissions.query('gender == "female" & major == "Physics" & admitted == True'))/female_phys)
+
+# Admission rate for male physics majors
+print(len(admissions.query('gender == "male" & major == "Physics" & admitted == True'))/male_phys)
+
+# What proportion of female students are majoring in chemistry?
+female_chem = len(admissions.query('gender == "female" & major == "Chemistry"'))
+print(female_chem/female)
+
+# What proportion of male students are majoring in chemistry?
+male_chem = len(admissions.query('gender == "male" & major == "Chemistry"'))
+print(male_chem/male)
+
+# Admission rate for female chemistry majors
+print(len(admissions.query('gender == "female" & admitted == True & major == "Chemistry"'))/female_chem)
+
+# Admission rate for male chemistry majors
+print(len(admissions.query('gender == "male" & admitted == True & major == "Chemistry"'))/male_chem)
+
+# Admission rate for physics majors
+phys_tot = female_phys + male_phys
+print(len(admissions.query('major == "Physics" & admitted == True'))/phys_tot)
+
+# Admission rate for chemistry majors
+chem_tot = female_chem + male_chem
+print(len(admissions.query('major == "Chemistry" & admitted == True'))/chem_tot)
